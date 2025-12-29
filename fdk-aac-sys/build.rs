@@ -188,7 +188,6 @@ static INCLUDE_DIRS: &'static [&'static str] = &[
     "aac/libSACenc/include",
 ];
 
-use std::path::PathBuf;
 use std::path::Path;
 use std::env;
 
