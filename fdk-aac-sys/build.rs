@@ -193,8 +193,35 @@ fn main() {
         // Tell cargo to invalidate the built crate whenever the wrapper changes
         println!("cargo:rerun-if-changed={}", src);
     }
+    
+    let devkitpro = env::var("DEVKITPRO").unwrap();
+    let devkitarm = env::var("DEVKITARM").unwrap();
+    let out_dir = PathBuf::from(env::var("OUT_DIR").unwrap());
+
+    println!("cargo:rerun-if-changed=build.rs");
+    println!("cargo:rerun-if-env-changed=DEVKITPRO");
+    println!("cargo:rustc-link-search=native={devkitpro}/libctru/lib");
+    println!("cargo:rerun-if-changed={devkitpro}/libctru");
+
+
+    let bin_dir = Path::new(devkitarm.as_str()).join("bin");
+    let cc = bin_dir.join("arm-none-eabi-gcc");
+    let ar = bin_dir.join("arm-none-eabi-ar");
 
     let mut cc = cc::Build::new();
+    cc
+       .compiler(cc)
+       .archiver(ar)
+       .include(&include_path)
+       .define("ARM11", None)
+       .define("__3DS__", None)
+       .flag("-march=armv6k")
+       .flag("-mtune=mpcore")
+       .flag("-mfloat-abi=hard")
+       .flag("-mfpu=vfp")
+       .flag("-mtp=soft")
+       .flag("-Wno-deprecated-declarations")
+       .host("arm-none-eabi");
 
     cc.warnings(false);
     cc.files(SOURCES);
