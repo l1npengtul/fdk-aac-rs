@@ -200,7 +200,6 @@ fn main() {
     
     let devkitpro = env::var("DEVKITPRO").unwrap();
     let devkitarm = env::var("DEVKITARM").unwrap();
-    let out_dir = PathBuf::from(env::var("OUT_DIR").unwrap());
 
     println!("cargo:rerun-if-changed=build.rs");
     println!("cargo:rerun-if-env-changed=DEVKITPRO");
