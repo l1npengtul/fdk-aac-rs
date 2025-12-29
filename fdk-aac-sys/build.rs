@@ -209,14 +209,13 @@ fn main() {
 
 
     let bin_dir = Path::new(devkitarm.as_str()).join("bin");
-    let cc = bin_dir.join("arm-none-eabi-gcc");
+    let gcc = bin_dir.join("arm-none-eabi-gcc");
     let ar = bin_dir.join("arm-none-eabi-ar");
 
     let mut cc = cc::Build::new();
     cc
-       .compiler(cc)
+       .compiler(gcc)
        .archiver(ar)
-       .include(&include_path)
        .define("ARM11", None)
        .define("__3DS__", None)
        .flag("-march=armv6k")
