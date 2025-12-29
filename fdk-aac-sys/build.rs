@@ -188,6 +188,10 @@ static INCLUDE_DIRS: &'static [&'static str] = &[
     "aac/libSACenc/include",
 ];
 
+use std::path::PathBuf;
+use std::path::Path;
+use std::env;
+
 fn main() {
     for src in SOURCES {
         // Tell cargo to invalidate the built crate whenever the wrapper changes
